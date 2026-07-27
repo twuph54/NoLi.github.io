@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roblox 官方复刻注册页</title>
+
+    <style>
+        /* ---------- 基础重置与排版 ---------- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            /* 使用你提供的官方源码里的背景图链接 */
+            background-image: url('https://images.rbxcdn.com/654748bf291b247bb0c2dc0136e4945d.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #000;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            margin: 0;
+        }
+
+        /* 右上角登录按钮 */
+        .top-login-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: white;
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .top-login-btn:hover { background-color: #eee; }
+
+        /* LOGO */
+        .logo-wrapper {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 48px;
+            letter-spacing: -1px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        .logo-r { color: #fff; }
+
+        /* 注册黑底玻璃框 */
+        .register-box {
+            background-color: rgba(0, 0, 0, 0.85);
+            width: 420px;
+            padding: 30px 35px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .register-title {
+            text-align: left;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-label { display: block; font-size: 12px; color: #ccc; margin-bottom: 5px; }
+        
+        .form-input, .form-select {
+            width: 100%; padding: 12px;
+            background-color: #333; border: 1px solid transparent; border-radius: 6px;
+            color: white; font-size: 14px; outline: none;
+        }
+        .form-input:focus, .form-select:focus { background-color: #444; border-color: #555; }
+        
+        .form-select-row { display: flex; gap: 10px; }
+        .form-select-row select { flex: 1; }
+        
+        /* 错误输入框红框 */
+        .form-input.error, .form-select.error { border-color: #ff4444; }
+
+        /* 性别按钮 */
+        .gender-row { display: flex; gap: 15px; }
+        .gender-btn {
+            flex: 1; background-color: #333; border: 2px solid transparent; border-radius: 6px;
+            padding: 10px; text-align: center; cursor: pointer; font-size: 18px; color: #888;
+            transition: 0.2s;
+        }
+        .gender-btn:hover { background-color: #444; color: white; }
+        .gender-btn.active { background-color: #555; border-color: #fff; color: #fff; }
+
+        /* 协议文字 */
+        .legal-text {
+            font-size: 10px; color: #aaa; text-align: center; line-height: 1.4;
+            margin: 15px 0 20px 0;
+        }
+        .legal-text a { color: #fff; text-decoration: underline; }
+
+        /* 注册按钮 */
+        .submit-btn {
+            width: 100%; padding: 14px;
+            background-color: #e0e0e0; color: #000;
+            border: none; border-radius: 6px;
+            font-size: 16px; font-weight: bold; cursor: pointer;
+        }
+        .submit-btn:hover { background-color: #fff; }
+
+        /* ---------- 底部平台区 (使用官方原版 SVG 图片) ---------- */
+        .footer-platforms {
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+        }
+        .footer-title { font-size: 14px; font-weight: 600; margin-bottom: 15px; color: #fff; }
+        
+        .footer-icons-row {
+            display: flex; 
+            gap: 12px; 
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+        
+        .footer-icon-btn {
+            background: rgba(0, 0, 0, 0.6); 
+            border: 1px solid #444;
+            padding: 8px 14px; 
+            border-radius: 6px; 
+            text-decoration: none; 
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .footer-icon-btn:hover { background: #222; border-color: #888; }
+
+        /* 平台图片样式设置 */
+        .footer-icon-btn img {
+            width: 16px; 
+            height: 16px;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#" class="top-login-btn">登录</a>
+
+    <div class="logo-wrapper"><span class="logo-r">R</span>OBLOX</div>
+
+    <div class="register-box">
+        <div class="register-title">注册帐户，加入游戏！</div>
+
+        <div class="form-group">
+            <div class="form-label">生日</div>
+            <div class="form-select-row">
+                <select class="form-select" id="birth-year"><option value="">年</option></select>
+                <select class="form-select" id="birth-month"><option value="">月</option></select>
+                <select class="form-select" id="birth-day"><option value="">日</option></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-label">用户名</div>
+            <input type="text" class="form-input" id="username" placeholder="请勿使用您的真实姓名。">
+        </div>
+
+        <div class="form-group">
+            <div class="form-label">密码</div>
+            <input type="password" class="form-input" id="password" placeholder="最少 8 个字符">
+        </div>
+
+        <div class="form-group">
+            <div class="form-label">性别 (可选)</div>
+            <div class="gender-row" id="gender-group">
+                <div class="gender-btn" data-value="male">♂</div>
+                <div class="gender-btn" data-value="female">♀</div>
+            </div>
+        </div>
+
+        <div class="legal-text">
+            点击“注册”即表示您同意我们的 <a href="#">使用条款</a> (包括仲裁条款)，并确认您已阅读我们的 <a href="#">隐私政策</a>。
+        </div>
+
+        <button class="submit-btn" id="register-btn">注册</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 底部平台区 (100% 从官方源码提取的真实 SVG) -->
+    <!-- ========================================== -->
+    <div class="footer-platforms">
+        <div class="footer-title">你设备上的 ROBLOX</div>
+        <div class="footer-icons-row">
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/aa19bda67ebf9966726f9c480b6a54b2.svg" alt="Apple"> App Store
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/3457010800af2c73496b1b8eb9314c81.svg" alt="Google"> Google Play
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/4205326a77c66ed94e1c4a9033e07d2a.svg" alt="PlayStation"> PlayStation
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/ea48243b4cce93f544947145c7b2ebc8.svg" alt="Xbox"> XBOX
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/61f892b61cf2a0f0f185424d92300f08.svg" alt="Meta"> Meta Quest
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/4be9b6ba0086e282f0f5f66160596043.svg" alt="Microsoft"> Microsoft
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/22006b3aab1a478cb460008b75a7e923.svg" alt="Amazon"> Amazon Appstore
+            </a>
+            
+            <a href="#" class="footer-icon-btn">
+                <img src="https://images.rbxcdn.com/f1b50399b5a61496a14a5d5dc08e1a4f.svg" alt="Samsung"> Galaxy Store
+            </a>
+            
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!--       核心跳转逻辑 JavaScript                -->
+    <!-- ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. 生成下拉菜单选项 (1950-2026)
+            const year = document.getElementById('birth-year');
+            const month = document.getElementById('birth-month');
+            const day = document.getElementById('birth-day');
+            
+            for(let i = 2026; i >= 1950; i--) {
+                let opt = document.createElement('option');
+                opt.value = i; opt.text = i; year.appendChild(opt);
+            }
+            for(let i = 1; i <= 12; i++) {
+                let opt = document.createElement('option');
+                opt.value = i; opt.text = i + '月'; month.appendChild(opt);
+            }
+            for(let i = 1; i <= 31; i++) {
+                let opt = document.createElement('option');
+                opt.value = i; opt.text = i + '日'; day.appendChild(opt);
+            }
+
+            // 2. 性别点击高亮
+            const genderBtns = document.querySelectorAll('.gender-btn');
+            let selectedGender = null;
+            genderBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    genderBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedGender = this.getAttribute('data-value');
+                });
+            });
+
+            // 3. 注册按钮点击处理
+            const registerBtn = document.getElementById('register-btn');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+
+            registerBtn.addEventListener('click', function() {
+                // 清除错误状态
+                document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+                let isValid = true;
+
+                if(!year.value || !month.value || !day.value) {
+                    year.classList.add('error'); month.classList.add('error'); day.classList.add('error');
+                    isValid = false;
+                }
+                if(usernameInput.value.trim() === '') {
+                    usernameInput.classList.add('error');
+                    isValid = false;
+                }
+                if(passwordInput.value.length < 8) {
+                    passwordInput.classList.add('error');
+                    isValid = false;
+                }
+
+                // ★★★ 所有验证通过，执行跳转 ★★★
+                if(isValid) {
+                    // 替换为你想要跳转的最终目标网址
+                    let targetUrl = 'https://www.roblox.com/games/18687417158/Forsaken'; 
+                    
+                    alert('🎉 注册成功！即将前往游戏页面。');
+                    window.location.href = targetUrl;
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
